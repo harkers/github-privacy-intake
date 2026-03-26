@@ -10,11 +10,17 @@
     textarea { min-height: 10rem; }
     .row { margin-bottom: .6rem; }
     .button { padding: .8rem 1rem; }
+    .file-upload { border: 2px dashed #ccc; padding: 1rem; margin: 1rem 0; border-radius: 8px; }
+    .file-upload:hover { border-color: #999; }
+    .file-list { margin-top: .5rem; }
+    .file-item { display: flex; align-items: center; gap: .5rem; padding: .3rem 0; }
+    .file-item button { background: none; border: none; color: #c00; cursor: pointer; font-size: 1.2rem; }
+    .hint { font-size: .85rem; color: #666; }
   </style>
 </head>
 <body>
   <h1>Create privacy case</h1>
-  <form method="post" action="/cases">
+  <form method="post" action="/cases" enctype="multipart/form-data">
     <label>Request type</label>
     <select name="request_type">
       <option value="incident">Incident</option>
@@ -65,6 +71,13 @@
     <div class="row"><label><input type="checkbox" name="contains_phi"> Contains PHI</label></div>
     <div class="row"><label><input type="checkbox" name="contains_special_category"> Contains special category data</label></div>
     <div class="row"><label><input type="checkbox" name="international_transfer"> International transfer relevant</label></div>
+
+    <label>Attachments</label>
+    <p class="hint">Upload supporting documents (PDF, Word, text files). Max 50MB per file.</p>
+    <div class="file-upload">
+      <input type="file" name="files" multiple accept=".pdf,.doc,.docx,.txt">
+      <p class="hint">Select one or more files to attach</p>
+    </div>
 
     <button class="button" type="submit">Submit case</button>
   </form>

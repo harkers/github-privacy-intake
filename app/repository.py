@@ -115,4 +115,14 @@ def get_case(case_id: str):
             (case_id,),
         )
         events = cur.fetchall()
-        return {"case": case_row, "metadata": meta_row["metadata"] if meta_row else {}, "tasks": tasks, "events": events}
+        cur.execute(
+            """
+            select id, artefact_type, filename, mime_type, sha256, created_at, created_by
+            from artefacts
+            where case_id = %s
+            order by created_at asc
+            """,
+            (case_id,),
+        )
+        artefacts = cur.fetchall()
+        return {"case": case_row, "metadata": meta_row["metadata"] if meta_row else {}, "tasks": tasks, "events": events, "artefacts": artefacts}

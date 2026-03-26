@@ -8,6 +8,11 @@
     .card { border: 1px solid #ddd; border-radius: 8px; padding: 1rem; margin-bottom: 1rem; }
     .event { border-left: 4px solid #333; padding-left: 1rem; margin: 1rem 0; }
     code, pre { background: #f6f6f6; padding: .2rem .3rem; }
+    .artefact { display: flex; align-items: center; gap: 1rem; padding: .5rem 0; border-bottom: 1px solid #eee; }
+    .artefact:last-child { border-bottom: none; }
+    .artefact-link { color: #0366d6; text-decoration: none; }
+    .artefact-link:hover { text-decoration: underline; }
+    .artefact-meta { font-size: .85rem; color: #666; }
   </style>
 </head>
 <body>
@@ -21,6 +26,22 @@
     <p><strong>Created:</strong> {{ case.created_at }}</p>
     <p><strong>Description:</strong><br>{{ case.description }}</p>
   </div>
+
+  {% if artefacts %}
+  <div class="card">
+    <h2>Attachments</h2>
+    {% for artefact in artefacts %}
+      <div class="artefact">
+        <a class="artefact-link" href="/uploads/{{ case.case_ref }}/{{ artefact.filename }}" target="_blank">
+          📎 {{ artefact.filename }}
+        </a>
+        <span class="artefact-meta">
+          {{ artefact.mime_type }} | {{ artefact.sha256[:12] }}... | {{ artefact.created_at }}
+        </span>
+      </div>
+    {% endfor %}
+  </div>
+  {% endif %}
 
   <div class="card">
     <h2>Tasks</h2>

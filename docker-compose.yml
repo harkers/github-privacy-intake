@@ -34,6 +34,9 @@ services:
       APP_PORT: 8000
       DATABASE_URL: ${DATABASE_URL}
       TZ: UTC
+      UPLOAD_DIR: /app/uploads
+    volumes:
+      - privacy_intake_uploads:/app/uploads
     depends_on:
       postgres:
         condition: service_healthy
@@ -84,3 +87,7 @@ networks:
   privacy_intake_net:
     name: privacy_intake_net
     driver: bridge
+
+volumes:
+  privacy_intake_uploads:
+    name: privacy_intake_uploads
